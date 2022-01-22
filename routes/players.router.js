@@ -31,7 +31,7 @@ router.post('/',
   validationHandler(createPlayerSchema, 'body'),
   async (req, res, next) => {
     try {
-      const { player } = req.body;
+      const player = req.body;
       const createdPlayer = await service.create(player);
       res.json(createdPlayer);
     } catch (err) {
@@ -45,7 +45,7 @@ router.patch('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { player } = req.body;
+      const player = req.body;
       const updatedPlayer = await service.update(id, player);
       res.json(updatedPlayer);
     } catch (err) {
