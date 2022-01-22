@@ -1,26 +1,39 @@
-
+const boom = require('@hapi/boom');
+const { models } = require('../libs/sequelize');
 
 class PlayersService {
-  find() {
-    return { hello: 'world' }
+  async find() {
+    const players = await models.Player.findAll();
+    return players;
   };
 
-  findOne(id) {
-    return { hello: 'findone' }
+  async findOne(id) {
+    const player = await models.Player.findByPk(id);
+    if (!player){
+      throw boom.notFound('player not found');
+    }
+    return player;
   };
 
-  update(id, changes) {
-    return { hello: 'update' }
+  async update(id, changes) {
+    console.log(changes);
+    const player = await this.findOne(id);
+    const updatedPlayer = player.update(changes);
+    await player.save();
+    return updatedPlayer;
   };
 
-  create(data) {
-    return { hello: 'create' }
+  async create(data) {
+    console.log(data);
+    const player = await models.Player.create(data);
+    return player;
   };
 
-  delete(id) {
-    return { hello: 'delete' }
+  async delete(id) {
+    const player = await this.findOne(id);
+    await player.destroy();
+    return id;
   };
-
 }
 
 module.exports = PlayersService;
