@@ -32,7 +32,13 @@ const PlayerSchema = {
   },
   position: {
     type: DataTypes.STRING
-  }, 
+  },
+  number: {
+    type: DataTypes.NUMBER
+  },
+  image: {
+    type: DataTypes.STRING
+  },
   createdAt: {
     type: DataTypes.DATE,
     field: 'created_at'
@@ -53,4 +59,4 @@ class Player extends Model {
   }
 }
 
-module.exports = { Player , PlayerSchema, PLAYER_TABLE}
+module.exports = { Player, PlayerSchema, PLAYER_TABLE }

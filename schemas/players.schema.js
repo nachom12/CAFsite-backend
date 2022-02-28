@@ -6,6 +6,8 @@ const age = Joi.number().integer().min(0);
 const placeOfBirth = Joi.string();
 const position = Joi.string();
 const playingSince = Joi.number().integer().min(2010);
+const number = Joi.number().integer().min(1);
+const image = Joi.string();
 
 const createPlayerSchema = Joi.object({
   firstName: firstName.required(),
@@ -13,7 +15,9 @@ const createPlayerSchema = Joi.object({
   age: age,
   placeOfBirth: placeOfBirth,
   position: position,
-  playingSince: playingSince
+  playingSince: playingSince,
+  number: number,
+  image: image
 });
 
 const updatePlayerSchema = Joi.object({
@@ -22,7 +26,9 @@ const updatePlayerSchema = Joi.object({
   age: age,
   placeOfBirth: placeOfBirth,
   position: position,
-  playingSince: playingSince
+  playingSince: playingSince,
+  number: number,
+  image: image
 });
 
 module.exports = { createPlayerSchema, updatePlayerSchema }
