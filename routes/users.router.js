@@ -53,11 +53,11 @@ router.patch('/:id',
   }
 );
 
-router.delete('/id', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedUser = await service.delete(id);
-    res.json(deletedUser);
+    res.json({ deletedUser });
   } catch (err) {
     next(err);
   }
