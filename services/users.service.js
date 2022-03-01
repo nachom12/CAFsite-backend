@@ -15,6 +15,14 @@ class UsersService {
     return user;
   };
 
+  async findByUserName(userName) {
+    const user = await models.User.findOne({ where: { userName } });
+    if (!user) {
+      throw boom.notFound('user not found');
+    }
+    return user;
+  }
+
   async update(id, changes) {
     const user = await this.findOne(id);
     const updatedUser = user.update(changes);
@@ -36,6 +44,16 @@ class UsersService {
     await user.destroy();
     return id;
   };
+
+  async verifyPassword(userName, password) {
+    const user = await this.findByUserName(userName);
+    if (user.password === password) {
+      const {password, ...rest} = user.dataValues;
+      return rest;
+    } else {
+      throw boom.badRequest('unauthorized');
+    }
+  }
 }
 
 module.exports = UsersService;

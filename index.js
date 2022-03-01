@@ -10,6 +10,7 @@ app.use(express.json());
 
 routerApi(app);
 
+require('./utils/auth/index');
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
