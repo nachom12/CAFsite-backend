@@ -15,4 +15,4 @@ app.use(boomErrorHandler);
 app.use(errorHandler);
 
 
-app.listen(config.port);
+app.listen(config.port, () => console.log(`server listening on port ${config.port}`));
