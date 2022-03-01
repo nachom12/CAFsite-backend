@@ -1,4 +1,5 @@
 const boom = require('@hapi/boom');
+const bcrypt = require('bcrypt');
 const { models } = require('../libs/sequelize');
 
 class UsersService {
@@ -32,7 +33,10 @@ class UsersService {
 
   async create(user) {
     try {
-      const createdUser = await models.User.create(user);
+      const { password, ...newUser } = user;
+      const encriptedPassword = bcrypt.hashSync(user.password, 8);
+      newUser.password = encriptedPassword;
+      const createdUser = await models.User.create(newUser);
       return createdUser;
     } catch (err) {
       throw boom.badRequest(err.message);
@@ -47,8 +51,9 @@ class UsersService {
 
   async verifyPassword(userName, password) {
     const user = await this.findByUserName(userName);
-    if (user.password === password) {
-      const {password, ...rest} = user.dataValues;
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      const { password, ...rest } = user.dataValues;
       return rest;
     } else {
       throw boom.badRequest('unauthorized');
