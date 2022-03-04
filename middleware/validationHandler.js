@@ -9,6 +9,19 @@ function validationHandler(schema, property) {
     }
     next();
   }
+};
+
+function roleValidation(roles) {
+  return (req, res, next) => {
+    if (roles.includes(req.user.role)) {
+      next();
+    } else {
+      next(boom.badRequest('not an allowed role'));
+    }
+  }
 }
 
-module.exports = validationHandler;
+module.exports = {
+  validationHandler,
+  roleValidation
+};

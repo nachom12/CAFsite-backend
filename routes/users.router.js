@@ -1,20 +1,25 @@
 const express = require('express');
+const passport = require('passport');
 const UsersService = require('../services/users.service')
-const validationHandler = require('../middleware/validationHandler');
+const { validationHandler, roleValidation } = require('../middleware/validationHandler');
 const { createUserSchema, updateUserSchema } = require('../schemas/users.schema');
 
 const router = express.Router();
 const service = new UsersService();
 
 
-router.get('/', async (req, res, next) => {
-  try {
-    const users = await service.find();
-    res.json(users);
-  } catch (err) {
-    next(err);
+router.get('/',
+  passport.authenticate('jwt', { session: false }),
+  roleValidation(['admin']),
+  async (req, res, next) => {
+    try {
+      const users = await service.find();
+      res.json(users);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 router.get('/:id', async (req, res, next) => {
   try {

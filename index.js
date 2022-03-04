@@ -3,6 +3,7 @@ const cors = require('cors');
 const routerApi = require('./routes');
 const { config } = require('./config/config');
 const { errorHandler, boomErrorHandler, logErrors } = require('./middleware/errorHandler');
+require('./utils/auth/index');
 
 const app = express();
 app.use(cors());
@@ -10,7 +11,6 @@ app.use(express.json());
 
 routerApi(app);
 
-require('./utils/auth/index');
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
