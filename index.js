@@ -3,6 +3,7 @@ const cors = require('cors');
 const routerApi = require('./routes');
 const { config } = require('./config/config');
 const { errorHandler, boomErrorHandler, logErrors } = require('./middleware/errorHandler');
+require('./utils/auth/index');
 
 const app = express();
 app.use(cors());
@@ -15,4 +16,4 @@ app.use(boomErrorHandler);
 app.use(errorHandler);
 
 
-app.listen(config.port);
+app.listen(config.port, () => console.log(`server listening on port ${config.port}`));

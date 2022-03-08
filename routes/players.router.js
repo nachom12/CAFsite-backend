@@ -1,6 +1,6 @@
 const express = require('express');
 const PlayersService = require('../services/players.service');
-const validationHandler = require('../middleware/validationHandler');
+const { validationHandler } = require('../middleware/validationHandler');
 const { createPlayerSchema, updatePlayerSchema } = require('../schemas/players.schema')
 
 
