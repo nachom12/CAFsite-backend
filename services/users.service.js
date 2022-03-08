@@ -4,12 +4,16 @@ const { models } = require('../libs/sequelize');
 
 class UsersService {
   async find() {
-    const users = await models.User.findAll();
+    const users = await models.User.findAll({
+      attributes: { exclude: ['password'] }
+    });
     return users;
   };
 
   async findOne(id) {
-    const user = await models.User.findByPk(id);
+    const user = await models.User.findByPk(id, {
+      attributes: { exclude: ['password'] }
+    });
     if (!user) {
       throw boom.notFound('user not found');
     }

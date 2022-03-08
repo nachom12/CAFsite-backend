@@ -9,7 +9,8 @@ router.post('/',
   async (req, res, next) => {
   try {
     let user = req.user;
-    user.token = jwt.sign(req.user, config.secret , { expiresIn: '1d' })
+    const token = jwt.sign(req.user, config.secret , { expiresIn: '1d' })
+    res.header('Authorization', token);
     res.json(user);
   } catch (err) {
     next(err);
