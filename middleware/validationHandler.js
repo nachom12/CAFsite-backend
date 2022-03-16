@@ -16,7 +16,7 @@ function roleValidation(roles) {
     if (roles.includes(req.user.role)) {
       next();
     } else {
-      next(boom.badRequest('not an allowed role'));
+      next(boom.unauthorized('not an allowed role'))
     }
   }
 }
