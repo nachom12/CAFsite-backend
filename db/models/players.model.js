@@ -31,7 +31,7 @@ const PlayerSchema = {
     field: 'playing_since'
   },
   position: {
-    type: DataTypes.STRING
+    type: DataTypes.ENUM(['Goalkeeper', 'Defender', 'Midfielder', 'Forward', 'Coach'])
   },
   number: {
     type: DataTypes.NUMBER
