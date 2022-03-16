@@ -34,7 +34,7 @@ const PlayerSchema = {
     type: DataTypes.ENUM(['Goalkeeper', 'Defender', 'Midfielder', 'Forward', 'Coach'])
   },
   number: {
-    type: DataTypes.NUMBER
+    type: DataTypes.INTEGER
   },
   image: {
     type: DataTypes.STRING
