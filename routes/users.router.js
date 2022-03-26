@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const UsersService = require('../services/users.service')
-const { validationHandler, roleValidation } = require('../middleware/validationHandler');
+const { validationHandler, roleValidation, userValidation } = require('../middleware/validationHandler');
 const { createUserSchema, updateUserSchema } = require('../schemas/users.schema');
 
 const router = express.Router();
@@ -46,6 +46,8 @@ router.post('/',
 
 router.patch('/:id',
   validationHandler(updateUserSchema, 'body'),
+  passport.authenticate('jwt', { session: false }),
+  userValidation(),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -58,7 +60,10 @@ router.patch('/:id',
   }
 );
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id',
+  passport.authenticate('jwt', { session: false }),
+  userValidation(),
+  async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedUser = await service.delete(id);

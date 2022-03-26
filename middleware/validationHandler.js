@@ -16,12 +16,24 @@ function roleValidation(roles) {
     if (roles.includes(req.user.role)) {
       next();
     } else {
-      next(boom.unauthorized('not an allowed role'))
+      next(boom.unauthorized('not an allowed role'));
+    }
+  }
+}
+
+function userValidation(){
+  return (req, res, next) => {
+    console.log('COMPARE ', req.params.id, ' LOL ', req.user.id);
+    if (req.params.id == req.user.id) {
+      next();
+    } else {
+      next(boom.unauthorized('not the correct user'));
     }
   }
 }
 
 module.exports = {
   validationHandler,
-  roleValidation
+  roleValidation,
+  userValidation
 };
