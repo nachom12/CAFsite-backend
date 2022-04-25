@@ -23,7 +23,6 @@ function roleValidation(roles) {
 
 function userValidation(){
   return (req, res, next) => {
-    console.log('COMPARE ', req.params.id, ' LOL ', req.user.id);
     if (req.params.id == req.user.id) {
       next();
     } else {
